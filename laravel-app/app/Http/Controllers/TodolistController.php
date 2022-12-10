@@ -33,9 +33,14 @@ class TodolistController extends Controller
     }
 
 
-    public function update(Request $request, Todolist $todolist)
+    public function update($id)
     {
-        //
+
+        $todo = Todolist::findOrFail($id);
+        $todo->done = !$todo->done;
+        $todo->save();
+
+        return redirect('/');
     }
 
 

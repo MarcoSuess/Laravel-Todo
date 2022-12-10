@@ -15,33 +15,54 @@
     <style>
         body {
             font-family: 'Nunito', sans-serif;
+            margin-left: 32px;
         }
 
-        h1 {
-            width: 100%;
-            text-align: center;
+        h1 {}
+
+        .create-todo {
+            margin-top: 32px;
+        }
+
+        li {
+            display: flex;
         }
     </style>
 </head>
 
 <body class="antialiased">
     <h1>Todo App</h1>
-
-    <form action="{{ route('store') }}" method="post">
+    <input name="showDoneTodo"  type="checkbox">
+    <label for="showDoneTodo">Show Done Todos</label>
+    <form class="create-todo" action="{{ route('store') }}" method="post">
         @csrf
         <input placeholder="Add your new todo" name="content" type="text">
         <button type="submit">Add</button>
     </form>
 
-    @if (count($todoLists))
-        @foreach ($todoLists as $todoList)
-            <ul>
-                <li>
-                    {{$todoList->content}}
-                </li>
-            </ul>
-        @endforeach
-    @endif
+
+    <div class="list">
+
+
+        @if (count($todoLists))
+            @foreach ($todoLists as $todoList)
+                <ul>
+                    <li>
+                        {{ $todoList->content }}
+                    
+                        <form id="todoDone-{{$todoList->id}}" action="{{ route('update', $todoList->id) }}" method="post">
+                            @csrf
+                            @method('post')
+                            
+                            <input  onClick="document.getElementById('todoDone-{{$todoList->id}}').submit()" id="checkbox-{{$todoList->id}}" {{$todoList->done == true ? 'checked' : ''}}  name="done" type="checkbox">
+
+                        </form>
+      
+                    </li>
+                </ul>
+            @endforeach
+        @endif
+    </div>
 </body>
 
 </html>
