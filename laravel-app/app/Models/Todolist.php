@@ -12,5 +12,11 @@ class Todolist extends Model
     use HasFactory;
     protected $fillable = ['content', 'done'];
 
+   /*  public $filter = [
+        'done' => false
+    ]; */
+
+
+
    
 }

@@ -17,10 +17,21 @@ class TodolistController extends Controller
         return view('home', compact('todoLists'));
     }
 
-    public function create()
+    public function indexFilter(Request $request)
     {
-        //
+
+        $checkbox = $request->input('showOpenTodos');
+     
+        if ($checkbox == 'on') {
+            $todoLists = Todolist::where('done', false)->get();
+        } else {
+            $todoLists = Todolist::all();
+        }
+
+
+        return view('home', compact('todoLists'));
     }
+
 
     public function store(Request $request)
     {
@@ -44,9 +55,9 @@ class TodolistController extends Controller
     }
 
 
-    public function destroy(Todolist $todolist)
+    /*  public function destroy(Todolist $todolist)
     {
         $todolist->delete();
         return back();
-    }
+    } */
 }

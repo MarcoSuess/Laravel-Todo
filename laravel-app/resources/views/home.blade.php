@@ -27,39 +27,33 @@
         li {
             display: flex;
         }
+
+        .line-through {
+            text-decoration: line-through;
+        }
     </style>
 </head>
 
 <body class="antialiased">
     <h1>Todo App</h1>
-    <input name="showDoneTodo"  type="checkbox">
-    <label for="showDoneTodo">Show Done Todos</label>
+
+    <form id="filter" action="{{ route('indexFilter') }}" method="get">
+        @csrf
+        <input <?php echo(isset($_GET['showOpenTodos']) && $_GET['showOpenTodos']=='on')?"checked":""?> onclick="document.getElementById('filter').submit()" id="showOpen" name="showOpenTodos" type="checkbox">
+        <label for="showDoneTodo">Show Open Todos</label>
+    </form>
+
+
     <form class="create-todo" action="{{ route('store') }}" method="post">
         @csrf
         <input placeholder="Add your new todo" name="content" type="text">
         <button type="submit">Add</button>
     </form>
 
-
     <div class="list">
-
-
         @if (count($todoLists))
             @foreach ($todoLists as $todoList)
-                <ul>
-                    <li>
-                        {{ $todoList->content }}
-                    
-                        <form id="todoDone-{{$todoList->id}}" action="{{ route('update', $todoList->id) }}" method="post">
-                            @csrf
-                            @method('post')
-                            
-                            <input  onClick="document.getElementById('todoDone-{{$todoList->id}}').submit()" id="checkbox-{{$todoList->id}}" {{$todoList->done == true ? 'checked' : ''}}  name="done" type="checkbox">
-
-                        </form>
-      
-                    </li>
-                </ul>
+                @include('todo-list')
             @endforeach
         @endif
     </div>

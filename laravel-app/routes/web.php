@@ -15,5 +15,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [TodolistController::class, 'index'])->name('index');
+Route::get('/filter', [TodolistController::class, 'indexFilter'])->name('indexFilter');
 Route::post('/', [TodolistController::class, 'store'])->name('store');
 Route::post('/{todolist:id}', [TodolistController::class, 'update'])->name('update');
