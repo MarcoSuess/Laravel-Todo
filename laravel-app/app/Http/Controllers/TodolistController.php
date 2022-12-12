@@ -19,15 +19,13 @@ class TodolistController extends Controller
 
     public function indexFilter(Request $request)
     {
-
         $checkbox = $request->input('showOpenTodos');
-     
+
         if ($checkbox == 'on') {
             $todoLists = Todolist::where('done', false)->get();
         } else {
             $todoLists = Todolist::all();
         }
-
 
         return view('home', compact('todoLists'));
     }
@@ -38,20 +36,18 @@ class TodolistController extends Controller
         $data = $request->validate([
             'content' => 'required'
         ]);
-
         Todolist::create($data);
+        
         return back();
     }
 
 
     public function update($id)
     {
-
         $todo = Todolist::findOrFail($id);
         $todo->done = !$todo->done;
         $todo->save();
-
-        return redirect('/');
+        return back();
     }
 
 

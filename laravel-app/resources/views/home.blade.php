@@ -39,7 +39,8 @@
 
     <form id="filter" action="{{ route('indexFilter') }}" method="get">
         @csrf
-        <input <?php echo(isset($_GET['showOpenTodos']) && $_GET['showOpenTodos']=='on')?"checked":""?> onclick="document.getElementById('filter').submit()" id="showOpen" name="showOpenTodos" type="checkbox">
+        <input <?php echo isset($_GET['showOpenTodos']) && $_GET['showOpenTodos'] == 'on' ? 'checked' : ''; ?> onclick="document.getElementById('filter').submit()" id="showOpen"
+            name="showOpenTodos" type="checkbox">
         <label for="showDoneTodo">Show Open Todos</label>
     </form>
 
